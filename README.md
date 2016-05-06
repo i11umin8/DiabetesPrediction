@@ -180,3 +180,41 @@ pyplot.show()
 ```
 
 This yields the following bar chart:
+
+![bar chart](https://github.com/i11umin8/DiabetesPrediction/blob/master/correlation.png)
+
+This gives us new insights on the data. It seems like the largest predictor of diabetes is the amount of Plasma Glucose. Now I'll simplify our model to only rely on 5 columns, ranked by correlation:
+
+```python
+# The top five features are (in descending order): Plasma Glucose, BMI, Age,# of pregnancies, Diabetes Pedigree Function
+#We have learned plasma glucose overwhelmingly correlates with diabetes
+features = ["Plasma Glucose", "BMI", "Age", "#Pregnancies", "Diabetes Pedigree Fn"]
+
+print("\n")
+print("Final Run:")
+print("\n")
+run(data[features], data["Has Diabetes?"], algorithms)
+```
+
+And our final output:
+```
+Algorithm 1
+-Prediction Accuracy: 0.7148714031066973
+-Elapsed Runtime: 0.07508301734924316
+
+Algorithm 2
+-Prediction Accuracy: 0.768270944741533
+-Elapsed Runtime: 0.06279325485229492
+
+Algorithm 3
+-Prediction Accuracy: 0.7682454800101859
+-Elapsed Runtime: 2.7128477096557617
+```
+
+Conclusion: 
+
+We can see that using a subset of data created by selecting the most correlative columns has caused our decision tree algorithm and our logistic regression algorithm to be slightly more accurate. Support Vector classification remained approximately the same.
+
+However, there are additional insights. It appears that using a subset of the data has caused the decision tree and the logistic regression algorithms to run slower. On the other hand, this idea sped up the Support Vector classification immensely. On our second run, this algorithm took over 18 seconds, while it took less than 3 on our final run, with almost the same accuracy.
+
+This shows that minor tweaks can have significant effects on machine learning algorithms. Support vector machines are considered 'cutting edge' in the field of machine learning, but it appears they may be a bit too complex for our example, as shown by the runtime. For this dataset, it appears that a standard implementation of regularized linear regression.
