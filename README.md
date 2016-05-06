@@ -130,8 +130,6 @@ There must be missing values in this data, since we have zero values for data wh
 # It is impossible to have 0 plasma glucose (blood sugar), blood pressure, tricep size, or BMI.
 unsanitized_columns =["Plasma Glucose", "Blood Pressure", "Tricep Size", "BMI"]
 
-#remove rows with undefined data
-rows = data.count(0)
 for col in unsanitized_columns:
     data.loc[data[col] == 0, col] = data[col].median()
 ```
