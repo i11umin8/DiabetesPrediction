@@ -64,13 +64,7 @@ run(data[feature_names], data["Has Diabetes?"], algorithms)
 
 selector = SelectKBest(k=8)
 selector.fit(data.iloc[:, 0:8], data.iloc[:, 8])
-print("\n")
-print("pvalues: ",selector.pvalues_ )
-print("\n")
 fit_score = -numpy.log(selector.pvalues_)
-print("\n")
-print("fit score: ",fit_score)
-print("\n")
 
 pyplot.bar(range(len(fit_score)), fit_score)
 pyplot.xticks(range(len(feature_names)), feature_names, rotation=15)
