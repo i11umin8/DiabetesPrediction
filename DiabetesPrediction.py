@@ -10,6 +10,7 @@ import time
 data = pandas.read_csv('pima-indians-diabetes.data', header=None)
 feature_names = ["#Pregnancies", "Plasma Glucose", "Blood Pressure", "Tricep Size", "Serum Insulin", "BMI",
                  "Diabetes Pedigree Fn", "Age"]
+
 #Define columns on our dataframe. Add a classification column
 data.columns = feature_names + ["Has Diabetes?"]
 
@@ -37,8 +38,6 @@ regression = LogisticRegression(random_state=1)
 support_vector_classifier = svm.SVC(kernel="linear")
 algorithms = [tree, regression, support_vector_classifier]
 
-
-
 print("\n")
 print("First Run:")
 print("\n")
@@ -58,7 +57,6 @@ rows = data.count(0)
 for col in unsanitized_columns:
     data.loc[data[col] == 0, col] = data[col].median()
 
-#we have removed around 200 lines with missing cells. This removes 'noise' but gives us less training data
 print("\n")
 print("Second Run:")
 print("\n")
