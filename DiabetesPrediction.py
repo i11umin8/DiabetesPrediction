@@ -52,8 +52,6 @@ print("\n")
 # It is impossible to have 0 plasma glucose (blood sugar), blood pressure, tricep size, or BMI.
 unsanitized_columns =["Plasma Glucose", "Blood Pressure", "Tricep Size", "BMI"]
 
-#remove rows with undefined data
-rows = data.count(0)
 for col in unsanitized_columns:
     data.loc[data[col] == 0, col] = data[col].median()
 
@@ -73,8 +71,8 @@ pyplot.xlabel("Features")
 pyplot.ylabel("Score")
 pyplot.show()
 
-# # The top five features are (in descending order): Plasma Glucose, BMI, Age,# of pregnancies, Diabetes Pedigree Function
-#We have learned plasma glucose overwhelmingly correlates
+# The top five features are (in descending order): Plasma Glucose, BMI, Age,# of pregnancies, Diabetes Pedigree Function
+#We have learned plasma glucose overwhelmingly correlates with diabetes
 features = ["Plasma Glucose", "BMI", "Age", "#Pregnancies", "Diabetes Pedigree Fn"]
 
 print("\n")
