@@ -1,12 +1,11 @@
 import pandas
 from sklearn import cross_validation, svm
 from sklearn.linear_model import LogisticRegression
-from matplotlib import pyplot
 from sklearn.feature_selection import SelectKBest
 from sklearn.tree import DecisionTreeClassifier
+from matplotlib import pyplot
 import numpy
 import time
-import sklearn
 
 data = pandas.read_csv('pima-indians-diabetes.data', header=None)
 feature_names = ["#Pregnancies", "Plasma Glucose", "Blood Pressure", "Tricep Size", "Serum Insulin", "BMI",
@@ -29,7 +28,6 @@ algorithms = [tree, regression, support_vector_classifier]
 
 
 def run(X, y, algorithms):
-    print("Running... \n")
     for index, alg in enumerate(algorithms):
         start = time.time()
         score = float(cross_validation.cross_val_score(alg, X, y, cv=5).mean())
@@ -38,7 +36,9 @@ def run(X, y, algorithms):
         print("-Prediction Accuracy: " + str(score))
         print("-Elapsed Runtime: "+str(end - start)+"\n")
 
-
+print("\n")
+print("First Run:")
+print("\n")
 run(data[feature_names], data["Has Diabetes?"], algorithms)
 
 
@@ -53,13 +53,12 @@ unsanitized_columns =["Plasma Glucose", "Blood Pressure", "Tricep Size", "BMI"]
 #remove rows with undefined data
 rows = data.count(0)
 for col in unsanitized_columns:
-    data = data[data[col] != 0]
+    data.loc[data[col] == 0, col] = data[col].median()
 
-rows_removed = rows - data.count(0)
-print("\n")
-print(data.describe())
-print("\n")
 #we have removed around 200 lines with missing cells. This removes 'noise' but gives us less training data
+print("\n")
+print("Second Run:")
+print("\n")
 run(data[feature_names], data["Has Diabetes?"], algorithms)
 
 selector = SelectKBest(k=8)
@@ -76,5 +75,9 @@ pyplot.show()
 # # The top five features are (in descending order): Plasma Glucose, BMI, Age,# of pregnancies, Diabetes Pedigree Function
 #We have learned plasma glucose overwhelmingly correlates
 features = ["Plasma Glucose", "BMI", "Age", "#Pregnancies", "Diabetes Pedigree Fn"]
-#run(data[features], data["Has Diabetes?"], algorithms)
+
+print("\n")
+print("Final Run:")
+print("\n")
+run(data[features], data["Has Diabetes?"], algorithms)
 
