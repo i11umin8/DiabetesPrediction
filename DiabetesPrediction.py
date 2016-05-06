@@ -20,13 +20,8 @@ data.columns = feature_names + ["Has Diabetes?"]
 # 2. Logistic Regression
 # 3. Support Vector Machine
 
-#define our algorithms:
-tree = DecisionTreeClassifier(random_state=1,)
-regression = LogisticRegression(random_state=1)
-support_vector_classifier = svm.SVC(kernel="linear")
-algorithms = [tree, regression, support_vector_classifier]
-
-
+#define our run function:
+#Takes feature matrix, a column vector of target values, and a set of algorithms to run
 def run(X, y, algorithms):
     for index, alg in enumerate(algorithms):
         start = time.time()
@@ -35,6 +30,14 @@ def run(X, y, algorithms):
         print("Algorithm " + str(index+1))
         print("-Prediction Accuracy: " + str(score))
         print("-Elapsed Runtime: "+str(end - start)+"\n")
+
+#define our algorithms:
+tree = DecisionTreeClassifier(random_state=1,)
+regression = LogisticRegression(random_state=1)
+support_vector_classifier = svm.SVC(kernel="linear")
+algorithms = [tree, regression, support_vector_classifier]
+
+
 
 print("\n")
 print("First Run:")
