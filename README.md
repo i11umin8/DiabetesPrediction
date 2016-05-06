@@ -218,3 +218,6 @@ We can see that using a subset of data created by selecting the most correlative
 However, there are additional insights. It appears that using a subset of the data has caused the decision tree and the logistic regression algorithms to run slower. On the other hand, this idea sped up the Support Vector classification immensely. On our second run, this algorithm took over 18 seconds, while it took less than 3 on our final run, with almost the same accuracy.
 
 This shows that minor tweaks can have significant effects on machine learning algorithms. Support vector machines are considered 'cutting edge' in the field of machine learning, but it appears they may be a bit too complex for our example, as shown by the runtime. For this dataset, it appears that a standard implementation of regularized linear regression.
+
+We've also gained some insight into how the classification correlates with the data. By analyzing our best features, we find that Plasma Glucose (blood sugar) is correlated very strongly with our classification. This seems obvious to those with diabetes, but another interesting finding is that the Diabetes Pedigree Function, which measures genetic influence, is relatively small, implying that diabetes cannot be predicted well using genetic history.
+
