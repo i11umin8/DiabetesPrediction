@@ -17,7 +17,7 @@ data.columns = feature_names + ["Has Diabetes?"]
 
 # I will now run three different machine learning algorithms to gain insight:
 
-# 1. Forest of Random Decision Trees:
+# 1. Decision Tree:
 # 2. Logistic Regression
 # 3. Support Vector Machine
 
@@ -39,13 +39,13 @@ def run(X, y, algorithms):
         print("-Elapsed Runtime: "+str(end - start)+"\n")
 
 
-#run(data[feature_names], data["Has Diabetes?"], algorithms)
+run(data[feature_names], data["Has Diabetes?"], algorithms)
 
 
 #Let's examine the data:
-
-#print(data.describe())
-
+print("\n")
+print(data.describe())
+print("\n")
 # There are some errors in the data
 # It is impossible to have 0 plasma glucose (blood sugar), blood pressure, tricep size, or BMI.
 unsanitized_columns =["Plasma Glucose", "Blood Pressure", "Tricep Size", "BMI"]
@@ -56,34 +56,31 @@ for col in unsanitized_columns:
     data = data[data[col] != 0]
 
 rows_removed = rows - data.count(0)
-#print(data.describe())
-
-#run(data[feature_names], data["Has Diabetes?"], algorithms)
-
-print("rows removed:\n ", str(rows_removed) + "\n")
+print("\n")
+print(data.describe())
+print("\n")
+#we have removed around 200 lines with missing cells. This removes 'noise' but gives us less training data
+run(data[feature_names], data["Has Diabetes?"], algorithms)
 
 selector = SelectKBest(k=8)
 selector.fit(data.iloc[:, 0:8], data.iloc[:, 8])
+print("\n")
+print("pvalues: ",selector.pvalues_ )
+print("\n")
 fit_score = -numpy.log(selector.pvalues_)
+print("\n")
+print("fit score: ",fit_score)
+print("\n")
 
 pyplot.bar(range(len(fit_score)), fit_score)
 pyplot.xticks(range(len(feature_names)), feature_names, rotation=15)
 pyplot.title("Correlation")
 pyplot.xlabel("Features")
 pyplot.ylabel("Score")
-#pyplot.show()
+pyplot.show()
 
 # # The top five features are (in descending order): Plasma Glucose, BMI, Age,# of pregnancies, Diabetes Pedigree Function
+#We have learned plasma glucose overwhelmingly correlates
 features = ["Plasma Glucose", "BMI", "Age", "#Pregnancies", "Diabetes Pedigree Fn"]
 #run(data[features], data["Has Diabetes?"], algorithms)
 
-#print("data: ", data)
-predictions = cross_validation.cross_val_predict(regression, data[features],data["Has Diabetes?"], cv=5)
-print("predictions: ", predictions)
-y=data["Has Diabetes?"]
-figure, ax = pyplot.subplots()
-ax.scatter(y, predictions)
-ax.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', lw=4)
-ax.set_xlabel('Measured')
-ax.set_ylabel('Predicted')
-pyplot.show()
