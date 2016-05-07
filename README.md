@@ -35,6 +35,7 @@ Now that I have labelled data in an easily accessible object, I'll now define a 
 
 #define our run function:
 #Takes feature matrix, a column vector of target values, and a set of algorithms to run
+#in order to improve our predictions, we will run our algorithms with k-fold cross validation, where k = 5
 def run(X, y, algorithms):
     for index, alg in enumerate(algorithms):
         start = time.time()
